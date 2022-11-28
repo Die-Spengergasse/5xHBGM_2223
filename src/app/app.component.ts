@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-
-// todo implement all your server-side properties of patient
-export interface Patient{
-  name: string;
-}
-
+import { Gender, Patient } from './Patient';
+import { DataService } from './data.service';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -18,18 +15,61 @@ export class AppComponent implements OnInit{
 
   // todo store patients here
   public patients: Patient[] = [];
+  currentPatient?: Patient = undefined;
 
-  constructor(private http: HttpClient) {}
+  patientForm = new FormGroup({
+    text: new FormControl(''),
+    active: new FormControl(true),
+    gender: new FormControl<Gender>('unknown'),
+    birthDate: new FormControl(''),
+    telecom: new FormArray([this.createTelecomFormGroup()]),
+    deceasedBoolean: new FormControl(false),
+    deceasedDateTime: new FormControl(null as Date | null),
+    address: new FormArray([this.createAddressFormGroup()]),
+  });
 
-  fetchIpText(){
-    this.http.get("http://ifconfig.me",{responseType: "text"}).subscribe(response => {
+  createAddressFormGroup() {
+    return new FormGroup({
+      city: new FormControl(''),
+      postalcode: new FormControl(''),
+    });
+  }
+
+  addNewAddress() {
+    this.patientForm.controls.address.push(this.createAddressFormGroup());
+  }
+
+  removeAddress(index: number) {
+    this.patientForm.controls.address.removeAt(index);
+  }
+
+  private createTelecomFormGroup(): FormGroup<{
+    value: FormControl<string | null>;
+  }> {
+    return new FormGroup({
+      value: new FormControl(''),
+    });
+  }
+
+  addNewTelecom() {
+    this.patientForm.controls.telecom.push(this.createTelecomFormGroup());
+  }
+
+  constructor(private dataService: DataService) {}
+
+  selectPatient(selection: Patient) {
+    this.currentPatient = selection;
+  }
+
+  fetchIpText() {
+    this.dataService.getIfConfigMe().subscribe(response => {
       console.log(response);
       this.ipAddress = response;
     });
   }
 
   fetchIpJson(){
-    this.http.get("http://ifconfig.me/all.json",{responseType: "json"}).subscribe(response => {
+    this.dataService.getAllJson().subscribe(response => {
       console.log(response);
     });
   }
@@ -37,6 +77,14 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.fetchIpText();
     this.fetchIpJson();
+    this.fetchPatients();
+  }
+
+  fetchPatients() {
+    this.dataService.getPatients().subscribe(patients => {
+      console.log(patients);
+      this.patients = patients;
+    });
   }
 
   // todo add http requests
@@ -45,6 +93,5 @@ export class AppComponent implements OnInit{
   getAllPatients(): void{
     throw new Error("not implemented");
   }
-
 }
 

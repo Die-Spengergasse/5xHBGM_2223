@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { AppComponent, Patient } from './app.component';
+import { AppComponent } from './app.component';
+import { Patient } from "./Patient";
 import {HttpClientTestingModule} from "@angular/common/http/testing";
 import {HttpClient} from "@angular/common/http";
 import {of} from "rxjs";
@@ -24,7 +25,6 @@ describe('AppComponent', () => {
 
   it('should return all patients', function () {
     const patients: Patient[] = [
-      {name: "Max Mustermann"}
     ];
 
     const fixture = TestBed.createComponent(AppComponent);

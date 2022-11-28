@@ -2,8 +2,59 @@
   {{ipAddress}}
 
   <table id="patientTable">
-    <!-- todo add your patients here -->
-
+    <tr *ngFor="let patient of patients" (click)="selectPatient(patient)">
+      <td>{{ patient.id }}</td>
+      <td>
+        <span *ngFor="let patientName of patient.name">
+          {{ patientName.text }}
+        </span>
+      </td>
+    </tr>
   </table>
 
+  <form [formGroup]="patientForm">
+    Text: <input formControlName="text" /><br />
+    Active: <input type="checkbox" formControlName="active" /><br />
+    Gender:
+    <select formControlName="gender">
+      <option>male</option>
+      <option>female</option>
+      <option>other</option>
+      <option>unknown</option></select
+    ><br />
+    Birthdate: <input type="date" formControlName="birthDate" /><br />
+    <div formArrayName="telecom">
+      <div
+        *ngFor="let telecom of patientForm.controls.telecom.controls"
+        [formGroup]="telecom"
+      >
+        <b>Telecom:</b><br />
+        Value: <input formControlName="value" />
+      </div>
+      <button (click)="addNewTelecom()">Add another</button>
+    </div>
+    Deceased: <input type="checkbox" formControlName="deceasedBoolean" /><br />
+    Deceased Time:
+    <input type="datetime-local" formControlName="deceasedDateTime" /><br />
+    Address:
+    <button (click)="addNewAddress()">New Address</button>
+    <div
+      style="border: solid"
+      *ngFor="
+        let address of patientForm.controls.address.controls;
+        let adressIndex = index
+      "
+      [formGroup]="address"
+    >
+      Postal Code: <input formControlName="postalcode" /><br />
+      City: <input formControlName="city" /><br />
+      <button (click)="removeAddress(adressIndex)">Delete</button>
+    </div>
+  </form>
+
+  <pre>{{ patientForm.value | json }}</pre>
+
+  <pre
+    >{{ currentPatient | json }}
+  </pre>
 </div>
