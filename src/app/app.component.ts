@@ -65,6 +65,12 @@ export class AppComponent implements OnInit{
     this.patientForm.reset();
   }
 
+  savePatient() {
+    this.dataService.postPatient(this.currentPatient!).subscribe(response => {
+      console.log('post', response);
+    });
+  }
+
   fetchIpText() {
     this.dataService.getIfConfigMe().subscribe(response => {
       console.log(response);

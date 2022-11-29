@@ -51,6 +51,7 @@
       City: <input formControlName="city" /><br />
       <button (click)="removeAddress(adressIndex)">Delete</button>
     </div>
+    <button (click)="savePatient()">Save</button>
   </form>
 
   <pre>{{ patientForm.value | json }}</pre>
