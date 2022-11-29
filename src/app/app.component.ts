@@ -58,6 +58,8 @@ export class AppComponent implements OnInit{
 
   selectPatient(selection: Patient) {
     this.currentPatient = selection;
+    this.patientForm.reset();
+    this.patientForm.patchValue(this.currentPatient);
   }
 
   createNewPatient() {
