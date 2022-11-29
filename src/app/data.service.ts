@@ -30,4 +30,14 @@ export class DataService {
   deletePatient(data: any) {
     return this.http.delete('http://localhost:8080/api/patient/' + data.id);
   }
+
+  putPatient(data: any) {
+    return this.http.put<Patient>(
+      'http://localhost:8080/api/patient/' + data.id,
+      data,
+      {
+        responseType: 'json',
+      }
+    );
+  }
 }

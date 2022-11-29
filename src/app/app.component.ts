@@ -82,11 +82,23 @@ export class AppComponent implements OnInit{
   }
 
   savePatient() {
-    this.dataService.postPatient(this.currentPatient!).subscribe(response => {
-      console.log('post', response);
-      this.fetchPatients();
-      this.currentPatient = undefined;
-    });
+    if (this.currentPatient?.id) {
+      const merged: any = this.patientForm.value;
+      merged.id = this.currentPatient.id;
+      this.dataService.putPatient(merged).subscribe(response => {
+        console.log('put', response);
+        this.fetchPatients();
+        this.currentPatient = undefined;
+      });
+    } else {
+      this.dataService
+        .postPatient(this.patientForm.value)
+        .subscribe(response => {
+          console.log('post', response);
+          this.fetchPatients();
+          this.currentPatient = undefined;
+        });
+    }
   }
 
   deletePatient() {
