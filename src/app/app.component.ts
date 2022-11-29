@@ -68,6 +68,8 @@ export class AppComponent implements OnInit{
   savePatient() {
     this.dataService.postPatient(this.currentPatient!).subscribe(response => {
       console.log('post', response);
+      this.fetchPatients();
+      this.currentPatient = undefined;
     });
   }
 
