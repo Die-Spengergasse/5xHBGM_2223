@@ -59,6 +59,20 @@ export class AppComponent implements OnInit{
   selectPatient(selection: Patient) {
     this.currentPatient = selection;
     this.patientForm.reset();
+    this.patientForm.controls.telecom.clear();
+    while (
+      this.patientForm.controls.telecom.length <
+      (this.currentPatient?.telecom?.length ?? 0)
+    ) {
+      this.addNewTelecom();
+    }
+    this.patientForm.controls.address.clear();
+    while (
+      this.patientForm.controls.address.length <
+      (this.currentPatient?.address?.length ?? 0)
+    ) {
+      this.addNewAddress();
+    }
     this.patientForm.patchValue(this.currentPatient);
   }
 
