@@ -89,6 +89,14 @@ export class AppComponent implements OnInit{
     });
   }
 
+  deletePatient() {
+    this.dataService.deletePatient(this.currentPatient).subscribe(response => {
+      console.log('Patient deleted', response);
+      this.fetchPatients();
+      this.currentPatient = undefined;
+    });
+  }
+
   fetchIpText() {
     this.dataService.getIfConfigMe().subscribe(response => {
       console.log(response);

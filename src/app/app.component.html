@@ -52,6 +52,11 @@
       <button (click)="removeAddress(adressIndex)">Delete</button>
     </div>
     <button (click)="savePatient()">Save</button>
+    <!-- wenn der patient eine id hat, kommt er aus der db u kann daher gelöscht werden
+         sonst zeigen wir den button gar nicht an -->
+    <button *ngIf="currentPatient?.id" (click)="deletePatient()">
+      Delete Patient
+    </button>
   </form>
 
   <pre>{{ patientForm.value | json }}</pre>
