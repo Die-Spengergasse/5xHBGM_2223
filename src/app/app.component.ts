@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { Gender, Patient } from './Patient';
 import { DataService } from './data.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { merge } from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -82,15 +83,14 @@ export class AppComponent implements OnInit{
   }
 
   savePatient() {
-    if (this.currentPatient?.id) {
-      const merged: any = this.patientForm.value;
-      merged.id = this.currentPatient.id;
+    if (this.currentPatient?.id) { // update
+      const merged = merge(this.currentPatient!, this.patientForm.value)
       this.dataService.putPatient(merged).subscribe(response => {
         console.log('put', response);
         this.fetchPatients();
         this.currentPatient = undefined;
       });
-    } else {
+    } else { // create
       this.dataService
         .postPatient(this.patientForm.value)
         .subscribe(response => {
