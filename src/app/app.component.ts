@@ -1,9 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import { Gender, Patient } from './Patient';
+import { Component, OnInit } from '@angular/core';
+import { Patient } from './Patient';
 import { DataService } from './data.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { merge } from 'lodash';
 
 @Component({
   selector: 'app-root',
@@ -18,95 +15,34 @@ export class AppComponent implements OnInit{
   public patients: Patient[] = [];
   currentPatient?: Patient = undefined;
 
-  patientForm = new FormGroup({
-    active: new FormControl(true),
-    gender: new FormControl<Gender>('unknown'),
-    birthDate: new FormControl(''),
-    telecom: new FormArray([this.createTelecomFormGroup()]),
-    deceasedBoolean: new FormControl(false),
-    deceasedDateTime: new FormControl(null as Date | null),
-    address: new FormArray([this.createAddressFormGroup()]),
-  });
-
-  createAddressFormGroup() {
-    return new FormGroup({
-      city: new FormControl(''),
-      postalcode: new FormControl(''),
-    });
-  }
-
-  addNewAddress() {
-    this.patientForm.controls.address.push(this.createAddressFormGroup());
-  }
-
-  removeAddress(index: number) {
-    this.patientForm.controls.address.removeAt(index);
-  }
-
-  private createTelecomFormGroup(): FormGroup<{
-    value: FormControl<string | null>;
-  }> {
-    return new FormGroup({
-      value: new FormControl(''),
-    });
-  }
-
-  addNewTelecom() {
-    this.patientForm.controls.telecom.push(this.createTelecomFormGroup());
-  }
-
   constructor(private dataService: DataService) {}
 
   selectPatient(selection: Patient) {
     this.currentPatient = selection;
-    this.patientForm.reset();
-    this.patientForm.controls.telecom.clear();
-    while (
-      this.patientForm.controls.telecom.length <
-      (this.currentPatient?.telecom?.length ?? 0)
-    ) {
-      this.addNewTelecom();
-    }
-    this.patientForm.controls.address.clear();
-    while (
-      this.patientForm.controls.address.length <
-      (this.currentPatient?.address?.length ?? 0)
-    ) {
-      this.addNewAddress();
-    }
-    this.patientForm.patchValue(this.currentPatient);
   }
 
   createNewPatient() {
     this.currentPatient = {};
-    this.patientForm.reset();
   }
 
-  savePatient() {
-    if (this.currentPatient?.id) { // update
-      const merged = merge(this.currentPatient!, this.patientForm.value)
-      const id = merged.id;
-
-      const withoutIds = omitDeep(merged, "id");
-
-      this.dataService.putPatient({id, ...withoutIds}).subscribe(response => {
-        console.log('put', response);
-        this.fetchPatients();
-        this.currentPatient = undefined;
-      });
-    } else { // create
-      this.dataService
-        .postPatient(this.patientForm.value)
-        .subscribe(response => {
-          console.log('post', response);
-          this.fetchPatients();
-          this.currentPatient = undefined;
-        });
-    }
+  createPatient(patient: Patient) {
+    this.dataService.postPatient(patient).subscribe(response => {
+      console.log('post', response);
+      this.fetchPatients();
+      this.currentPatient = undefined;
+    });
   }
 
-  deletePatient() {
-    this.dataService.deletePatient(this.currentPatient).subscribe(response => {
+  updatePatient(patient: Patient) {
+    this.dataService.putPatient(patient).subscribe(response => {
+      console.log('put', response);
+      this.fetchPatients();
+      this.currentPatient = undefined;
+    });
+  }
+
+  deletePatient(patient: Patient) {
+    this.dataService.deletePatient(patient).subscribe(response => {
       console.log('Patient deleted', response);
       this.fetchPatients();
       this.currentPatient = undefined;
