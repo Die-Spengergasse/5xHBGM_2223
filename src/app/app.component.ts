@@ -85,7 +85,11 @@ export class AppComponent implements OnInit{
   savePatient() {
     if (this.currentPatient?.id) { // update
       const merged = merge(this.currentPatient!, this.patientForm.value)
-      this.dataService.putPatient(merged).subscribe(response => {
+      const id = merged.id;
+
+      const withoutIds = omitDeep(merged, "id");
+
+      this.dataService.putPatient({id, ...withoutIds}).subscribe(response => {
         console.log('put', response);
         this.fetchPatients();
         this.currentPatient = undefined;
