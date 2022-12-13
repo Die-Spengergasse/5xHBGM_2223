@@ -6,9 +6,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
+import { PractitionerListComponent } from './practitioner-list/practitioner-list.component';
 
 @NgModule({
-  declarations: [AppComponent, PatientFormComponent, PatientListComponent],
+  declarations: [
+    AppComponent,
+    PatientFormComponent,
+    PatientListComponent,
+    PractitionerListComponent,
+  ],
   imports: [BrowserModule, HttpClientModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]
