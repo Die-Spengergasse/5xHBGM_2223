@@ -22,22 +22,4 @@ describe('AppComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
-  it('should return all patients', function () {
-    const patients: Patient[] = [
-    ];
-
-    const fixture = TestBed.createComponent(AppComponent);
-    const http = TestBed.inject(HttpClient);
-    const app = fixture.componentInstance;
-
-    spyOn(http,'get').and.callThrough().and.returnValue(of(patients));
-
-    app.getAllPatients();
-
-    if(app.patients.length === 0){
-      throw new Error("no patients were received");
-    }
-  });
-
 });

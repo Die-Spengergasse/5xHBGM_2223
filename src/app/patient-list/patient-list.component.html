@@ -1,0 +1,20 @@
+<table id="patientTable">
+  <tr *ngFor="let patient of patients" (click)="selectPatient(patient)">
+    <td>{{ patient.id }}</td>
+    <td>
+      <span *ngFor="let patientName of patient.name">
+        {{ patientName.text }}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<button (click)="createNewPatient()">Create new Patient</button><br />
+
+<app-patient-form
+  [currentPatient]="currentPatient"
+  (patientCreate)="createPatient($event)"
+  (patientUpdate)="updatePatient($event)"
+  (patientDelete)="deletePatient($event)"
+>
+</app-patient-form>
