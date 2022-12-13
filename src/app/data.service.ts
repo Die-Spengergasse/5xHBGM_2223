@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Patient } from './Patient';
+import { Practitioner } from './Practitioner';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,24 @@ export class DataService {
     return this.http.get<Patient[]>("http://localhost:8080/api/patient/", { responseType: "json" });
   }
 
+  getPractitioners() {
+    return this.http.get<Practitioner[]>("http://localhost:8080/api/practitioner/", {
+      responseType: "json"
+    });
+  }
+
   getPatient(id: string) {
     return this.http.get<Patient>('http://localhost:8080/api/patient/' + id, {
       responseType: 'json',
     });
   }
+
+  getPractitioner(id: string) {
+    return this.http.get<Practitioner>('http://localhost:8080/api/practitioner/' + id, {
+      responseType: 'json',
+    });
+  }
+
 
   postPatient(data: Patient) {
     return this.http.post<Patient>('http://localhost:8080/api/patient/', data, {

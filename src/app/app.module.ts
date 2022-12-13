@@ -25,6 +25,7 @@ import { RouterModule } from '@angular/router';
       { path: 'patients', redirectTo: '/patients/', pathMatch: 'full' },
       { path: 'patients/:id', component: PatientListComponent },
       { path: 'practitioners', component: PractitionerListComponent },
+      { path: 'practitioners/:id', component: PractitionerListComponent },
       { path: '', redirectTo: '/patients/', pathMatch: 'full' },
     ]),
   ],
