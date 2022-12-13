@@ -21,6 +21,12 @@ export class DataService {
     return this.http.get<Patient[]>("http://localhost:8080/api/patient/", { responseType: "json" });
   }
 
+  getPatient(id: string) {
+    return this.http.get<Patient>('http://localhost:8080/api/patient/' + id, {
+      responseType: 'json',
+    });
+  }
+
   postPatient(data: Patient) {
     return this.http.post<Patient>('http://localhost:8080/api/patient/', data, {
       responseType: 'json',
