@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { Patient } from '../Patient';
 
@@ -15,6 +15,7 @@ export class PatientListComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private router: Router,
     activatedRoute: ActivatedRoute
   ) {
     activatedRoute.paramMap.subscribe(params => {
@@ -27,11 +28,8 @@ export class PatientListComponent implements OnInit {
     });
   }
 
-  selectPatient(selection: Patient) {
-    this.currentPatient = selection;
-  }
-
   createNewPatient() {
+    this.router.navigate(['/patients/'])
     this.currentPatient = {};
   }
 
