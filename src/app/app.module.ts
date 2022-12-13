@@ -22,9 +22,10 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: 'patients', component: PatientListComponent },
+      { path: 'patients', redirectTo: '/patients/', pathMatch: 'full' },
+      { path: 'patients/:id', component: PatientListComponent },
       { path: 'practitioners', component: PractitionerListComponent },
-      { path: '', redirectTo: '/patients', pathMatch: 'full' },
+      { path: '', redirectTo: '/patients/', pathMatch: 'full' },
     ]),
   ],
   providers: [],

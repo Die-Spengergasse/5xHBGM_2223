@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import { Patient } from '../Patient';
 
@@ -12,7 +13,19 @@ export class PatientListComponent implements OnInit {
   public patients: Patient[] = [];
   currentPatient?: Patient = undefined;
 
-  constructor(private dataService: DataService) {}
+  constructor(
+    private dataService: DataService,
+    activatedRoute: ActivatedRoute
+  ) {
+    activatedRoute.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        dataService.getPatient(id).subscribe(patient => {
+          this.currentPatient = patient;
+        });
+      }
+    });
+  }
 
   selectPatient(selection: Patient) {
     this.currentPatient = selection;
