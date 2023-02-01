@@ -1,14 +1,9 @@
 <div>
-  {{ipAddress}}
 
-  <table id="patientTable">
+  <table id="patientTable" border="1">
     <tr *ngFor="let patient of patients" (click)="selectPatient(patient)">
       <td>{{ patient.id }}</td>
-      <td>
-        <span *ngFor="let patientName of patient.name">
-          {{ patientName.text }}
-        </span>
-      </td>
+
     </tr>
   </table>
 
@@ -31,7 +26,7 @@
         <b>Telecom:</b><br />
         Value: <input formControlName="value" />
       </div>
-      <button (click)="addNewTelecom()">Add another</button>
+      <button (click)="addNewTelecom()">Add Telecom</button>
     </div>
     Deceased: <input type="checkbox" formControlName="deceasedBoolean" /><br />
     Deceased Time:
@@ -52,9 +47,11 @@
     </div>
   </form>
 
+  <p>Form values</p>
   <pre>{{ patientForm.value | json }}</pre>
 
-  <pre
+
+  <!--<pre
     >{{ currentPatient | json }}
-  </pre>
+  </pre>-->
 </div>
