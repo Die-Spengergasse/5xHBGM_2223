@@ -5,7 +5,10 @@ import { DataService } from './data.service';
 =======
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { HumanName } from './HumanName';
+<<<<<<< HEAD
 >>>>>>> acf087d (added dynamic field creation for list of strings in name field)
+=======
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
 
 @Component({
   selector: 'app-root',
@@ -24,10 +27,14 @@ export class AppComponent implements OnInit{
     id: new FormControl(''),
     identifier: new FormArray([]) ,
 <<<<<<< HEAD
+<<<<<<< HEAD
     name: new FormArray([this.createHumanNameFormGroup(1,1,1)]), // todo create name formgroup
 =======
     name: new FormGroup({}), // todo create name formgroup
 >>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
+=======
+    name: new FormArray([this.createHumanNameFormGroup(1,1,1)]), // todo create name formgroup
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
     text: new FormControl(''),
     active: new FormControl(true),
     gender: new FormControl<Gender>('unknown'),
@@ -140,13 +147,13 @@ export class AppComponent implements OnInit{
     this.adjustDynamicFormElements(selection);
     this.patientForm.patchValue(selection);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
+=======
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
   }
-
-
-
 
   ngOnInit(): void {
 <<<<<<< HEAD
@@ -191,10 +198,14 @@ export class AppComponent implements OnInit{
       ); 
     });*/
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
     
 >>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
+=======
+
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
 
     // telecom
     this.patientForm.controls.telecom = new FormArray(
@@ -207,14 +218,20 @@ export class AppComponent implements OnInit{
       Array(selection.address.length).fill(null).map(() => this.createAddressFormGroup())
     );
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
 
     // name
     this.patientForm.controls.name = new FormArray(
       selection.name.map(name => this.createHumanNameFormGroup(name.given.length, name.prefix.length, name.suffix.length))
     );
 
+<<<<<<< HEAD
 =======
 >>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
+=======
+>>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
 }
 }
 
