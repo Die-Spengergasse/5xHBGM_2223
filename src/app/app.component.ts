@@ -18,6 +18,9 @@ export class AppComponent implements OnInit{
   currentPatient?: Patient = undefined;
 
   patientForm = new FormGroup({
+    id: new FormControl(''),
+    identifier: new FormArray([]) ,
+    name: new FormGroup({}), // todo create name formgroup
     text: new FormControl(''),
     active: new FormControl(true),
     gender: new FormControl<Gender>('unknown'),
@@ -59,30 +62,24 @@ export class AppComponent implements OnInit{
 
   selectPatient(selection: Patient) {
     this.currentPatient = selection;
+
+    console.log(selection);
+    
+    // todo adjust amount of dynamic form elements
+    this.adjustDynamicFormElements(selection);
+    this.patientForm.patchValue(selection);
+
   }
 
-  fetchIpText() {
-    this.dataService.getIfConfigMe().subscribe(response => {
-      console.log(response);
-      this.ipAddress = response;
-    });
-  }
 
-  fetchIpJson(){
-    this.dataService.getAllJson().subscribe(response => {
-      console.log(response);
-    });
-  }
+
 
   ngOnInit(): void {
-    this.fetchIpText();
-    this.fetchIpJson();
     this.fetchPatients();
   }
 
   fetchPatients() {
     this.dataService.getPatients().subscribe(patients => {
-      console.log(patients);
       this.patients = patients;
     });
   }
@@ -93,5 +90,37 @@ export class AppComponent implements OnInit{
   getAllPatients(): void{
     throw new Error("not implemented");
   }
+
+
+
+  adjustDynamicFormElements(selection: Patient) {
+    console.log(selection.telecom.length);
+
+    
+    const dynamicFields: [string, Function][] = [
+      ["telecom", () => this.createTelecomFormGroup()],
+      ["address", () => this.createAddressFormGroup()]
+    ];
+
+    /*
+    dynamicFields.forEach(fieldDefinition => {
+      this.patientForm.controls[fieldDefinition[0]] = new FormArray(
+        Array(selection[fieldDefinition[0]].length).fill(null).map(fieldDefinition[1] as any);
+      ); 
+    });*/
+    
+
+    // telecom
+    this.patientForm.controls.telecom = new FormArray(
+      // Array(selection.telecom.length).fill(this.createTelecomFormGroup())
+      Array(selection.telecom.length).fill(null).map(() => this.createTelecomFormGroup())
+    );
+
+    // address
+    this.patientForm.controls.address = new FormArray(
+      Array(selection.address.length).fill(null).map(() => this.createAddressFormGroup())
+    );
 }
+}
+
 
