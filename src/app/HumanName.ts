@@ -1,4 +1,11 @@
 
 export interface HumanName {
-  text: string;
+  id: string;
+  use: string;
+  text?: string;
+  family: string;
+  given: string[];
+  prefix: string[];
+  suffix: string[];
+  period?: any;
 }
