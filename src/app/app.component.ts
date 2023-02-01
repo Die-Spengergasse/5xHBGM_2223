@@ -23,7 +23,11 @@ export class AppComponent implements OnInit{
   patientForm = new FormGroup({
     id: new FormControl(''),
     identifier: new FormArray([]) ,
+<<<<<<< HEAD
     name: new FormArray([this.createHumanNameFormGroup(1,1,1)]), // todo create name formgroup
+=======
+    name: new FormGroup({}), // todo create name formgroup
+>>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
     text: new FormControl(''),
     active: new FormControl(true),
     gender: new FormControl<Gender>('unknown'),
@@ -135,13 +139,23 @@ export class AppComponent implements OnInit{
     // todo adjust amount of dynamic form elements
     this.adjustDynamicFormElements(selection);
     this.patientForm.patchValue(selection);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
   }
 
+
+
+
   ngOnInit(): void {
+<<<<<<< HEAD
 <<<<<<< HEAD
     this.fetchIpText();
     this.fetchIpJson();
 =======
+=======
+>>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
     this.fetchPatients();
   }
 
@@ -176,7 +190,11 @@ export class AppComponent implements OnInit{
         Array(selection[fieldDefinition[0]].length).fill(null).map(fieldDefinition[1] as any);
       ); 
     });*/
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
 
     // telecom
     this.patientForm.controls.telecom = new FormArray(
@@ -188,12 +206,15 @@ export class AppComponent implements OnInit{
     this.patientForm.controls.address = new FormArray(
       Array(selection.address.length).fill(null).map(() => this.createAddressFormGroup())
     );
+<<<<<<< HEAD
 
     // name
     this.patientForm.controls.name = new FormArray(
       selection.name.map(name => this.createHumanNameFormGroup(name.given.length, name.prefix.length, name.suffix.length))
     );
 
+=======
+>>>>>>> 65af32d (enabled dynamic field amount changes based on incoming data)
 }
 }
 
