@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import { Gender, Patient } from './Patient';
 import { DataService } from './data.service';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { HumanName } from './HumanName';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit{
   patientForm = new FormGroup({
     id: new FormControl(''),
     identifier: new FormArray([]) ,
-    name: new FormGroup({}), // todo create name formgroup
+    name: new FormArray([this.createHumanNameFormGroup(1,1,1)]), // todo create name formgroup
     text: new FormControl(''),
     active: new FormControl(true),
     gender: new FormControl<Gender>('unknown'),
@@ -42,15 +43,79 @@ export class AppComponent implements OnInit{
     this.patientForm.controls.address.push(this.createAddressFormGroup());
   }
 
+  addNewName(){
+    this.patientForm.controls.name.push(this.createHumanNameFormGroup(1, 1, 1));
+  }
+
   removeAddress(index: number) {
     this.patientForm.controls.address.removeAt(index);
   }
+
+  removeName(index: number) {
+    this.patientForm.controls.name.removeAt(index);
+  }
+
 
   private createTelecomFormGroup(): FormGroup<{
     value: FormControl<string | null>;
   }> {
     return new FormGroup({
       value: new FormControl(''),
+    });
+  }
+
+  createTextFormControl(){
+    return new FormControl<string | null>("");
+  }
+
+  createPeriodFormGroup(){
+    return new FormGroup({
+      start: new FormControl<Date>( new Date()),
+      end: new FormControl<Date>( new Date())
+    });
+  }
+
+  addGivenName(name: any){
+    console.log( this.patientForm.value);
+    name.controls.given.push(this.createTextFormControl());
+    
+  }
+
+  removeGivenName(index: number, name: any){
+    name.controls.given.removeAt(index);
+  }
+
+  addSuffix(name: any){
+    console.log( this.patientForm.value);
+    name.controls.suffix.push(this.createTextFormControl());
+    
+  }
+
+  removeSuffix(index: number, name: any){
+    name.controls.suffix.removeAt(index);
+  }
+
+  
+  addPrefix(name: any){
+    console.log( this.patientForm.value);
+    name.controls.prefix.push(this.createTextFormControl());
+    
+  }
+
+  removePrefix(index: number, name: any){
+    name.controls.suffix.removeAt(index);
+  }
+
+  createHumanNameFormGroup(givenAmount: number , prefixAmount: number , suffixAmount: number ){
+    return new FormGroup({
+      id: new FormControl(""),
+      use: new FormControl(""),
+      text: new FormControl<null | string>(""),
+      family: new FormControl<string>(""),
+      given: new FormArray(Array(givenAmount).fill(null).map( () => this.createTextFormControl()) ),
+      prefix: new FormArray(Array(prefixAmount).fill(null).map( () => this.createTextFormControl()) ),
+      suffix: new FormArray(Array(suffixAmount).fill(null).map( () => this.createTextFormControl()) ),
+      period: this.createPeriodFormGroup()
     });
   }
 
@@ -68,11 +133,7 @@ export class AppComponent implements OnInit{
     // todo adjust amount of dynamic form elements
     this.adjustDynamicFormElements(selection);
     this.patientForm.patchValue(selection);
-
   }
-
-
-
 
   ngOnInit(): void {
     this.fetchPatients();
@@ -108,7 +169,7 @@ export class AppComponent implements OnInit{
         Array(selection[fieldDefinition[0]].length).fill(null).map(fieldDefinition[1] as any);
       ); 
     });*/
-    
+
 
     // telecom
     this.patientForm.controls.telecom = new FormArray(
@@ -120,6 +181,12 @@ export class AppComponent implements OnInit{
     this.patientForm.controls.address = new FormArray(
       Array(selection.address.length).fill(null).map(() => this.createAddressFormGroup())
     );
+
+    // name
+    this.patientForm.controls.name = new FormArray(
+      selection.name.map(name => this.createHumanNameFormGroup(name.given.length, name.prefix.length, name.suffix.length))
+    );
+
 }
 }
 
