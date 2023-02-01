@@ -45,6 +45,56 @@
       City: <input formControlName="city" /><br />
       <button (click)="removeAddress(adressIndex)">Delete</button>
     </div>
+
+
+    Name:
+    <button (click)="addNewName()">New Name</button>
+    <div
+      style="border: solid"
+      *ngFor="
+        let name of patientForm.controls.name.controls;
+        let nameIndex = index
+      "
+      [formGroup]="name"
+    >
+      use: <input formControlName="use" /> <br />
+      text: <input formControlName="text" /><br />
+      family: <input formControlName="family" /><br />
+      given: 
+      <div formArrayName="given">
+        <div *ngFor="let string of name.controls.given.controls; index as i">
+          <input type="text" [formControlName]="i" [value]="string.value">
+          <button (click)="removeGivenName(i, name)">Remove</button>
+        </div>
+      </div>
+      <button (click)="addGivenName(name)">Add given name</button>
+      <br />
+
+      prefix: 
+      <div formArrayName="prefix">
+        <div *ngFor="let string of name.controls.prefix.controls; index as i">
+          <input type="text" [formControlName]="i" [value]="string.value">
+          <button (click)="removePrefix(i, name)">Remove</button>
+        </div>
+      </div>
+      <button (click)="addPrefix(name)">Add prefix</button>
+      <br />
+
+
+      suffix: 
+      <div formArrayName="suffix">
+        <div *ngFor="let string of name.controls.suffix.controls; index as i">
+          <input type="text" [formControlName]="i" [value]="string.value">
+          <button (click)="removeSuffix(i, name)">Remove</button>
+        </div>
+      </div>
+      <button (click)="addSuffix(name)">Add suffix</button>
+      <br />
+
+
+      <button (click)="removeName(nameIndex)">Delete Name</button>
+    </div>
+
   </form>
 
   <p>Form values</p>
