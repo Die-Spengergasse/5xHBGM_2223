@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../data.service";
 import {ActivatedRoute, convertToParamMap, Router} from "@angular/router";
+import {Practitioner} from "../Practitioner";
 
 @Component({
   selector: 'app-practitioner-list',
@@ -8,6 +9,12 @@ import {ActivatedRoute, convertToParamMap, Router} from "@angular/router";
   styleUrls: ['./practitioner-list.component.css'],
 })
 export class PractitionerListComponent implements OnInit {
+
+
+  practitioners: Practitioner[] = [];
+  private currentPractitioner?: Practitioner;
+
+
 
   constructor(
     private dataService: DataService,
@@ -19,5 +26,19 @@ export class PractitionerListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchPractitioners();
+  }
+
+  createNewPractitioner() {
+    this.router.navigate(['/practitioners/'])
+    this.currentPractitioner = {};
+
+  }
+
+  private fetchPractitioners() {
+    this.dataService.getPractitioners().subscribe(practitioners => {
+      this.practitioners = practitioners;
+    });
+  }
 }

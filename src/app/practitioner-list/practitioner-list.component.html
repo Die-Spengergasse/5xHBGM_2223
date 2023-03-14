@@ -1,1 +1,23 @@
-<p>practitioner-list works!</p>
+
+<div *ngIf="practitioners.length === 0">No Practitioners defined!</div>
+
+<table id="practitionerTable">
+  <tr *ngFor="let practitioner of practitioners" [routerLink]="'/practitioners/' + practitioner.id">
+    <td>{{ practitioner.id }}</td>
+    <td>
+      <span *ngFor="let practitionerName of practitioner.name">
+        {{ practitionerName.text }}
+      </span>
+    </td>
+  </tr>
+</table>
+
+<button (click)="createNewPractitioner()">Create new Practitioner</button><br />
+
+<!--<app-practitioner-form
+  [currentpractitioner]="currentpractitioner"
+  (practitionerCreate)="createpractitioner($event)"
+  (practitionerUpdate)="updatepractitioner($event)"
+  (practitionerDelete)="deletepractitioner($event)"
+>
+</app-practitioner-form>-->
