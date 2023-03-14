@@ -7,13 +7,16 @@ import { Telecom } from './Telecom';
 export type Gender = 'unknown' | 'male' | 'female' | 'other';
 
 export interface Patient {
-  id?: string;
-  active?: boolean;
-  gender?: Gender;
-  birthdate?: string;
-  telecom?: Telecom[];
-  name?: HumanName[];
-  deceasedBoolean?: boolean;
-  deceasedDateTime?: Date;
-  address?: Address[];
+  identifier: any; 
+  birthDate: any;
+  id: string;
+  text: string | null;
+  active: boolean | null;
+  gender: Gender | null;
+  birthdate: string;
+  telecom: Telecom[] | any;
+  name: HumanName[];
+  deceasedBoolean: boolean | null;
+  deceasedDateTime: Date | null;
+  address: Address[] | any;
 }
