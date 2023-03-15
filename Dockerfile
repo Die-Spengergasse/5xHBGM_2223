@@ -8,7 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --force
+# todo --force must be used here
+RUN npm install
 
 # Copy the rest of the application code to the container
 COPY . .
