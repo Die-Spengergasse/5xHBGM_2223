@@ -23,7 +23,7 @@ export class AppComponent implements OnInit{
     name: new FormArray([this.createHumanNameFormGroup(1,1,1)]), // todo create name formgroup
     text: new FormControl(''),
     active: new FormControl(true),
-    gender: new FormControl<Gender>('unknown'),
+    gender: new FormControl<string>('unknown'),
     birthDate: new FormControl(''),
     telecom: new FormArray([this.createTelecomFormGroup()]),
     deceasedBoolean: new FormControl(false),
