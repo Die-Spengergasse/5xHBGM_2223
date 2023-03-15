@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  frontend:
+    image: ghcr.io/die-spengergasse/5xbhbgm2223:latest
+    ports:
+      - "80:80"
+
+# to login create a personal access token with the permission read_package
+# see https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry 
+# see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+# then run docker login and enter
+# your username (e.g. maximiliankraft)
+# your access token ghp_**********************
