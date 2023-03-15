@@ -27,7 +27,7 @@ jobs:
       run: |
         docker buildx build \
           --progress plain \
-          --platform linux/amd64,linux/arm64 \
+    #      --platform linux/amd64,linux/arm64 
           --tag ghcr.io/die-spengergasse/5xbhbgm2223:latest  \
           --push .
     #- name: Build and push Docker image
