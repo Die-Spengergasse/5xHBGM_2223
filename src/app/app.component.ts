@@ -37,7 +37,7 @@ export class AppComponent implements OnInit{
 >>>>>>> d4c6121 (added dynamic field creation for list of strings in name field)
     text: new FormControl(''),
     active: new FormControl(true),
-    gender: new FormControl<Gender>('unknown'),
+    gender: new FormControl<string>('unknown'),
     birthDate: new FormControl(''),
     telecom: new FormArray([this.createTelecomFormGroup()]),
     deceasedBoolean: new FormControl(false),

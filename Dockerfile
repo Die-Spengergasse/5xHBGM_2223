@@ -14,7 +14,7 @@ RUN npm install --force
 COPY . .
 
 # Build the application and output the files to /dist
-RUN npm run build
+RUN npm run build --prod
 
 # Use a Nginx base image for the final container
 FROM nginx:1.23-alpine
