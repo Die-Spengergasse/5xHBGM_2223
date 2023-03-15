@@ -30,7 +30,7 @@ export class PatientListComponent implements OnInit {
 
   createNewPatient() {
     this.router.navigate(['/patients/'])
-    this.currentPatient = {};
+    this.currentPatient = undefined;
   }
 
   createPatient(patient: Patient) {

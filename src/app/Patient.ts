@@ -8,12 +8,12 @@ export type Gender = 'unknown' | 'male' | 'female' | 'other';
 
 export interface Patient {
   id?: string;
-  active?: boolean;
-  gender?: Gender;
-  birthdate?: string;
+  active: boolean | null | undefined;
+  gender: Gender | null | undefined;
+  birthdate: string | null | undefined;
   telecom?: Telecom[];
   name?: HumanName[];
-  deceasedBoolean?: boolean;
+  deceasedBoolean: boolean | null | undefined;
   deceasedDateTime?: Date;
   address?: Address[];
 }

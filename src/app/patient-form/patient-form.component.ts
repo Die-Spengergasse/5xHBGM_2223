@@ -7,8 +7,6 @@ import {
   Output,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { isNil, merge } from 'lodash';
-import { omitByDeep, omitDeep } from 'lodash-omitdeep';
 import { Gender, Patient } from '../Patient';
 
 @Component({
@@ -71,14 +69,13 @@ export class PatientFormComponent implements OnChanges {
   savePatient() {
     if (this.currentPatient?.id) {
       // update
-      const merged = merge(this.currentPatient!, this.patientForm.value);
+
 
       // falls server streikt, kann es sein, dass sie die ids
       // rauslöschen müssen - das geht zB so:
-      const id = merged.id;
-      const withoutIds = omitDeep(merged, 'id');
+      const id = this.currentPatient.id;
       this.patientUpdate.emit(
-        { id, ...withoutIds }
+        { ...this.currentPatient as any, ...this.patientForm.value }
         // es sollte reichen: merged
       );
     } else {
