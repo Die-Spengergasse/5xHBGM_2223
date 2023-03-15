@@ -180,7 +180,6 @@ export class AppComponent implements OnInit{
       Array(selection.address.length).fill(null).map(() => this.createAddressFormGroup())
     );
 
-
     // name
     this.patientForm.controls.name = new FormArray(
       selection.name.map(name => this.createHumanNameFormGroup(name.given.length, name.prefix.length, name.suffix.length))
