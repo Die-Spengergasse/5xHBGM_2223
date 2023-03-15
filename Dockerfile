@@ -7,9 +7,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json files to the container
 COPY package*.json ./
 
-# Install dependencies
-# todo --force must be used here
-RUN npm install
+# Install dependencies via ci
+RUN npm ci
 
 # Copy the rest of the application code to the container
 COPY . .
